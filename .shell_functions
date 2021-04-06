@@ -166,6 +166,6 @@ wp_set_permissions () {
 		echo "- Changing permissions for $1/wp-config.php to 660"
 		sudo chmod 660 $1/wp-config.php;
 	else
-		echo "❗ Usage: wp_fix_permissions.sh [/full/path/to/WordPress/website], e.g. wp_fix_permissions.sh ~/websites/wordpress"
+		echo "❗ Usage: wp_fix_permissions [/full/path/to/WordPress/website], e.g. wp_fix_permissions ~/websites/wordpress"
 	fi
 }
