@@ -10,8 +10,8 @@ echo -e "${pinkbold}Initializing${blue}...${normal}"
 echo ""
 
 ## Update IP address in Windows and Linux hosts files (IP changes on reboot)
-if [ -f ~/linux/scripts/update_host_files.sh ]; then
-	source ~/linux/scripts/update_host_files.sh
+if [ -f ~/linux/scripts/host_files_update.sh ]; then
+	source ~/linux/scripts/host_files_update.sh
 fi
 
 echo ""
