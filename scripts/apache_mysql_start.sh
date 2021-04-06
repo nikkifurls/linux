@@ -10,7 +10,7 @@ echo -e "${bold}Starting Apache2 and MySQL${normal}"
 
 ## Start Apache2 if not running
 echo -e "- Staring Apache"
-status=`service apache2 status`
+status=`sudo service apache2 status`
 if [[ $status == *"apache2 is not running" ]]
 then
 	sudo service apache2 start
@@ -20,7 +20,7 @@ fi
 
 ## Start MySQL if not running
 echo -e "- Starting MySQL"
-status=`service mysql status`
+status=`sudo service mysql status`
 if [[ $status == *"MySQL is stopped." ]]
 then
 	read -n1 -s -p "❔ Start MySQL? (y/n) "

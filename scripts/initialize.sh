@@ -17,6 +17,6 @@ fi
 echo ""
 
 ## Start Apache2 and MySQL
-if [ -f ~/linux/scripts/start_apache_mysql.sh ]; then
-	source ~/linux/scripts/start_apache_mysql.sh
+if [ -f ~/linux/scripts/apache_mysql_start.sh ]; then
+	source ~/linux/scripts/apache_mysql_start.sh
 fi
