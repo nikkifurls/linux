@@ -1,20 +1,45 @@
-# ~/.shell_functions: included in ~/.bashrc, contains custom POSIX-compliant shell functions
+# ~/.shell_functions: included in ~/.bashrc, contains custom POSIX-compliant shell functions and aliases
 
-# Include aliases
-if [ -f ~/.bash_aliases ]; then
-	. ~/.bash_aliases
-fi
+# Formatting output
 
-# Include variables
-if [ -f ~/.shell_variables ]; then
-	. ~/.shell_variables
-fi
+# Font weight
+bold=$(tput bold)
+normal=$(tput sgr0)
 
-# Custom functions
+# Font color
+black=$(tput setaf 0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+magenta=$(tput setaf 5)
+cyan=$(tput setaf 6)
+white=$(tput setaf 7)
+reset=$(tput setaf 9)
+
+
+###
+### Linux / General
+###
+
+# Directory shortcuts
+alias cd_linux="cd ~/linux"
+alias cd_lx="cd ~/linux"
+alias cd_websites="cd ~/websites"
+alias cd_web="cd ~/websites"
+alias cd_misc="cd ~/misc"
+
+# Creates an alias for every directory in ~/websites/
+for dir in ~/websites/*/
+do
+    dir=${dir%*/} 			# remove the trailing "/"
+    website="${dir##*/}"    # print everything after the final "/"
+	alias cd_$website="cd ~/websites/$website"
+done
 
 # Initialize Linux
 linux_initialize () {
-	echo "${bold}Initializing...${normal}"
+	echo "${bold}Initializing Linux...${normal}"
 	echo ""
 
 	# Update IP address in Windows and Linux hosts files (IP changes on reboot)
@@ -28,6 +53,18 @@ linux_initialize () {
 	# Enable WordPress CLI autocompletion
 	wp_cli_enable_autocompletion
 	echo ""
+
+	# Check for upgrade
+	linux_upgrade
+}
+
+# Upgrade Linux
+# update: downloads package information
+# upgrade: install upgrades using updated package data
+linux_upgrade () {
+	echo "${bold}Upgrading Linux${normal}"
+	sudo apt update
+	sudo apt upgrade
 }
 
 # Update IP address in Windows and Linux hosts files (IP changes on reboot)
@@ -68,6 +105,22 @@ hosts_files_update () {
 		echo "✅ No updated needed in $windows_hosts_file"
 	fi
 }
+
+###
+### Apache and MySQL
+###
+
+alias apache_status="sudo service apache2 status"
+alias apache_restart="sudo service apache2 restart"
+alias apache_reload="sudo service apache2 reload"
+alias apache_start="sudo service apache2 start"
+alias apache_stop="sudo service apache2 stop"
+
+alias mysql_status="sudo service mysql status"
+alias mysql_restart="sudo service mysql restart"
+alias mysql_reload="sudo service mysql reload"
+alias mysql_start="sudo service mysql start"
+alias mysql_stop="sudo service mysql stop"
 
 # Get Apache2 and MySQL status
 apache_mysql_status () {
@@ -157,6 +210,13 @@ apache_mysql_stop () {
 		sudo service mysql stop
 	fi
 }
+
+###
+### WordPress
+###
+
+# WGet latest version of WordPress
+alias wp_wget="wget https://wordpress.org/latest.tar.gz; tar -xzvf latest.tar.gz"
 
 # Set WordPress file permissions
 wp_set_permissions () {
