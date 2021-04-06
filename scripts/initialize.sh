@@ -20,3 +20,10 @@ echo ""
 if [ -f ~/linux/scripts/apache_mysql_start.sh ]; then
 	source ~/linux/scripts/apache_mysql_start.sh
 fi
+
+echo ""
+
+## Enable WordPress CLI autocomplete
+if [ -f ~/linux/scripts/wp_cli_enable_autocomplete.sh ]; then
+	source ~/linux/scripts/wp_cli_enable_autocomplete.sh
+fi
