@@ -24,6 +24,10 @@ linux_initialize () {
 	# Start Apache2 and MySQL
 	apache_mysql_start
 	echo ""
+
+	# Enable WordPress CLI autocompletion
+	wp_cli_enable_autocompletion
+	echo ""
 }
 
 # Update IP address in Windows and Linux hosts files (IP changes on reboot)
@@ -168,4 +172,34 @@ wp_set_permissions () {
 	else
 		echo "❗ Usage: wp_fix_permissions [/full/path/to/WordPress/website], e.g. wp_fix_permissions ~/websites/wordpress"
 	fi
+}
+
+# Enable WordPress CLI autocompletion
+# https://github.com/wp-cli/wp-cli/blob/master/utils/wp-completion.bash
+wp_cli_enable_autocompletion () {
+	echo "${bold}Enabling WordPress CLI Autocompletion${normal}"
+
+	# Enable WordPress CLI autocompletion
+	_wp_complete() {
+		local OLD_IFS="$IFS"
+		local cur=${COMP_WORDS[COMP_CWORD]}
+
+		IFS=$'\n';  # want to preserve spaces at the end
+		local opts="$(wp cli completions --line="$COMP_LINE" --point="$COMP_POINT")"
+
+		if [ "$opts" =~ \<file\>\s* ]
+		then
+			COMPREPLY=( $(compgen -f -- $cur) )
+		elif [ $opts = "" ]
+		then
+			COMPREPLY=( $(compgen -f -- $cur) )
+		else
+			COMPREPLY=( ${opts[*]} )
+		fi
+
+		IFS="$OLD_IFS"
+		return 0
+	}
+	
+	complete -o nospace -F _wp_complete wp
 }
