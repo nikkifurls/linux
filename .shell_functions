@@ -1,5 +1,7 @@
 # ~/.shell_functions: included in ~/.bashrc, contains custom POSIX-compliant shell functions and aliases
 
+projects_dir="projects"
+
 # Formatting output
 
 # Font weight
@@ -22,19 +24,15 @@ reset=$(tput setaf 9)
 ### Linux / General
 ###
 
-# Directory shortcuts
-alias cd_linux="cd ~/linux"
-alias cd_lx="cd ~/linux"
-alias cd_websites="cd ~/websites"
-alias cd_web="cd ~/websites"
-alias cd_misc="cd ~/misc"
+# Project shortcuts
+alias cd_projects="cd ~/$projects_dir"
 
-# Creates an alias for every directory in ~/websites/
-for dir in ~/websites/*/
+# Creates an alias for every project in ~/$projects_dir/
+for dir in ~/$projects_dir/*/
 do
     dir=${dir%*/} 			# remove the trailing "/"
-    website="${dir##*/}"    # print everything after the final "/"
-	alias cd_$website="cd ~/websites/$website"
+    project="${dir##*/}"    # print everything after the final "/"
+	alias cd_$project="cd ~/$projects_dir/$project"
 done
 
 # Initialize Linux
@@ -230,7 +228,7 @@ wp_set_permissions () {
 		echo "- Changing permissions for $1/wp-config.php to 660"
 		sudo chmod 660 $1/wp-config.php;
 	else
-		echo "❗ Usage: wp_fix_permissions [/full/path/to/WordPress/website], e.g. wp_fix_permissions ~/websites/wordpress"
+		echo "❗ Usage: wp_fix_permissions [/full/path/to/WordPress/website], e.g. wp_fix_permissions ~/$projects_dir/wordpress"
 	fi
 }
 
