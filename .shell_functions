@@ -210,6 +210,16 @@ apache_mysql_stop () {
 }
 
 ###
+### GitHub
+###
+
+# Open the current repository on github.com
+function gh {
+	this_repo=`git config --get remote.origin.url 2>&1`
+	open "https://github.com/`expr "$this_repo" : '.*:\(.*\).git'`/"
+}
+
+###
 ### WordPress
 ###
 
